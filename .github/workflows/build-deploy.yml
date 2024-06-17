@@ -51,7 +51,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           tags: ghcr.io/${{ needs.set-env.outputs.github_repository_lc }}:latest
           push: true
