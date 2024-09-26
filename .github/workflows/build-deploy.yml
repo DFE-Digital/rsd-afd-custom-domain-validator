@@ -17,7 +17,7 @@ on:
 jobs:
   set-env:
     name: Set environment variables
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       github_repository_lc: ${{ steps.var.outputs.github_repository_lc }}
       environment: ${{ steps.var.outputs.environment }}
@@ -32,7 +32,7 @@ jobs:
 
   build-and-push-image:
     name: Build and push to GHCR
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: set-env
     environment: ${{ needs.set-env.outputs.environment }}
     steps:
@@ -60,7 +60,7 @@ jobs:
   acr-import:
     name: Import image to ${{ needs.set-env.outputs.environment }} ACR
     needs: [ build-and-push-image, set-env ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: ${{ needs.set-env.outputs.environment }}
     steps:
       - name: Azure login with ACR credentials
@@ -83,7 +83,7 @@ jobs:
   deploy:
     name: Deploy new image
     needs: [ set-env, acr-import ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: ${{ needs.set-env.outputs.environment }}
     steps:
       - name: Azure login with ACI credentials
